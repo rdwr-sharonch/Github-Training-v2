@@ -1,0 +1,16 @@
+{
+  "users": [
+    {
+      "username": "sharon",
+      "password_hash": "$2b$12$dz95YXlGIcpPtiHEzxecGOMg5rUxrac1L9QcJhpdTcwoMTEmHRYFi"
+    },
+    {
+      "username": "alice",
+      "password_hash": "$2b$12$QpCdJFPmYhD.sFn4PBr1O.J4.0CtCfiZSknBF2YaRU2wQCPaYErgK"
+    },
+    {
+      "username": "bob",
+      "password_hash": "$2b$12$wZ4qKU7OA3di0g1MHZbCNOaqbTSdwb3hZo71uSyehZ9u8N3cykWLm"
+    }
+  ]
+}
