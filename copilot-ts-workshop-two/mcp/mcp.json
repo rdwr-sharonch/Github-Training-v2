@@ -1,0 +1,10 @@
+{
+    "servers": {
+        "superheroes-mcp": {
+            "command": "node",
+            "args": [
+                "${workspaceFolder}/mcp/build/index.js"
+            ]
+        }
+    }
+}

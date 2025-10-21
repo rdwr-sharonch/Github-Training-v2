@@ -1,0 +1,28 @@
+{
+    "name": "mcp",
+    "version": "1.0.0",
+    "type": "module",
+    "main": "index.js",
+    "bin": {
+      "mcp": "./build/index.js"
+    },
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "build": "tsc && chmod 755 build/index.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "files": [
+      "build"
+    ],
+    "dependencies": {
+      "@modelcontextprotocol/sdk": "^1.11.4",
+      "zod": "^3.25.3"
+    },
+    "devDependencies": {
+      "@types/node": "^22.15.19",
+      "typescript": "^5.8.3"
+    }
+  }
