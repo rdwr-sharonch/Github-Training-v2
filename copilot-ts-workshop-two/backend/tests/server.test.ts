@@ -87,3 +87,46 @@ describe('GET /api/superheroes/:id/powerstats', () => {
   });
 });
 
+describe('GET /api/superheroes/compare', () => {
+  it('should compare two superheroes and return correct category winners and overall winner', async () => {
+    const response = await request(app).get('/api/superheroes/compare?id1=1&id2=2');
+    expect(response.status).toBe(200);
+    expect(response.body.id1).toBe(1);
+    expect(response.body.id2).toBe(2);
+    expect(Array.isArray(response.body.categories)).toBe(true);
+    expect(response.body.categories.length).toBe(6);
+    // Check order and values
+    const expectedOrder = ['intelligence','strength','speed','durability','power','combat'];
+    response.body.categories.forEach((cat, idx) => {
+      expect(cat.name).toBe(expectedOrder[idx]);
+      expect(['1','2','tie',1,2]).toContain(cat.winner);
+      expect(typeof cat.id1_value).toBe('number');
+      expect(typeof cat.id2_value).toBe('number');
+    });
+    // For ids 1 and 2, id1 wins 3, id2 wins 3, so tie
+    expect(response.body.overall_winner).toBe('tie');
+  });
+
+  it('should return 400 if id1 or id2 is missing', async () => {
+    const response = await request(app).get('/api/superheroes/compare?id1=1');
+    expect(response.status).toBe(400);
+    expect(response.body.error).toMatch(/required/);
+  });
+
+  it('should return 404 if either superhero does not exist', async () => {
+    const response = await request(app).get('/api/superheroes/compare?id1=1&id2=999');
+    expect(response.status).toBe(404);
+    expect(response.body.error).toMatch(/not found/);
+  });
+
+  it('should return correct winner when one hero wins more categories', async () => {
+    // id3 vs id2: id3 wins 5 categories, id2 wins 1
+    const response = await request(app).get('/api/superheroes/compare?id1=3&id2=2');
+    expect(response.status).toBe(200);
+    expect(response.body.overall_winner).toBe(3);
+    // id2 vs id1: id2 wins 3, id1 wins 3, tie
+    const tieResponse = await request(app).get('/api/superheroes/compare?id1=2&id2=1');
+    expect(tieResponse.status).toBe(200);
+    expect(tieResponse.body.overall_winner).toBe('tie');
+  });
+});
